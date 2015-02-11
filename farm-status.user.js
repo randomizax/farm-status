@@ -2,11 +2,11 @@
 // @id             iitc-plugin-farm-status@randomizax
 // @name           IITC plugin: Report farm status
 // @category       Info
-// @version        0.1.2.20150211.103953
+// @version        0.1.3.20150211.130046
 // @namespace      https://github.com/jonatkins/ingress-intel-total-conversion
 // @updateURL      https://rawgit.com/randomizax/farm-status/latest/farm-status.meta.js
 // @downloadURL    https://rawgit.com/randomizax/farm-status/latest/farm-status.user.js
-// @description    [randomizax-2015-02-11-103953] Display exportable list of portals as TSV(CSV).
+// @description    [randomizax-2015-02-11-130046] Display exportable list of portals as TSV(CSV).
 // @include        https://www.ingress.com/intel*
 // @include        http://www.ingress.com/intel*
 // @match          https://www.ingress.com/intel*
@@ -22,7 +22,7 @@ if(typeof window.plugin !== 'function') window.plugin = function() {};
 //PLUGIN AUTHORS: writing a plugin outside of the IITC build environment? if so, delete these lines!!
 //(leaving them in place might break the 'About IITC' page or break update checks)
 // plugin_info.buildName = 'randomizax';
-// plugin_info.dateTimeVersion = '20150211.103953';
+// plugin_info.dateTimeVersion = '20150211.130046';
 // plugin_info.pluginId = 'farm-status';
 //END PLUGIN AUTHORS NOTE
 
@@ -357,7 +357,7 @@ window.plugin.farmStatus.onTipClick = function(ev) {
 };
 
 var setup = function() {
-  $('<style>').prop('type', 'text/css').html('.leaflet-control-farm-status a\n{\n	background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCI+Cgk8ZyBzdHlsZT0iZmlsbDojMDAwMDAwO2ZpbGwtb3BhY2l0eTowLjQ7c3Ryb2tlOm5vbmUiPgoJCTxwYXRoIGQ9Ik0gNiwyNCAyNCwyNCAxNSw2IHoiLz4KCQk8cGF0aCBkPSJNIDYsMjQgMjQsMjQgMTUsMTIgeiIvPgoJCTxwYXRoIGQ9Ik0gNiwyNCAyNCwyNCAxNSwxOCB6Ii8+Cgk8L2c+Cjwvc3ZnPgo=");\n}\n.leaflet-control-farm-status a.active\n{\n	background-color: #BBB;\n}\n.leaflet-control-farm-status-tooltip\n{\n	background-color: rgba(255, 255, 255, 0.6);\n	display: none;\n	height: 44px;\n	left: 30px;\n	line-height: 15px;\n	margin-left: 15px;\n	margin-top: -12px;\n	padding: 4px 10px;\n	position: absolute;\n	top: 50%;\n	white-space: nowrap;\n	width: auto;\n}\n.leaflet-control-farm-status a.active .leaflet-control-farm-status-tooltip\n{\n	display: block;\n}\n.leaflet-control-farm-status a.finish .leaflet-control-farm-status-tooltip\n{\n	display: block;\n}\n.leaflet-control-farm-status-tooltip:before\n{\n	border-color: transparent rgba(255, 255, 255, 0.6);\n	border-style: solid;\n	border-width: 12px 12px 12px 0;\n	content: "";\n	display: block;\n	height: 0;\n	left: -12px;\n	position: absolute;\n	width: 0;\n}\n').appendTo('head');
+  $('<style>').prop('type', 'text/css').html('.leaflet-control-farm-status a\n{\n	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAABZElEQVRYw+2XzU3DQBCFP0PuuAQkN2A6gMueQwd0QAmQCoAKSAf4iOZCqIBtwMLpYI/c4DIrLZb/Ns4qSOSdRvZ63/Obn7XhiP+OLNXGxpjvkENEOtedHNqBo4BsIIc5sATO9VIDVIDrymmQ80mc/vlFD3kJvATkHnfANWCNMb2FNcsBffMPJXfAk966BXJ14qLPidgu6HIgtP0KsBpXgbAlsE5VhKHt1qsXEduzZhYWI/dLn2+NPc5SCnBB/NaqAY/t2MYiku0qYA08aJxr5Xet2QtO2xfquv4qiiIDLnueWQGvQ5U9exC1WjHErxYE7jU1lQprYoUNTcJSayAPaiNsyxvguSM1UUKykSPVT0T8BBwg30lI9PeAMWaMvHfuzz4NI8mTHMcx5DaFgJj+dykErKZuDLzvXYCINMFoPogDAI8TN09SA4iIm+CC8zMg2X+BMeZTR/VGybYa27GvpSP+FH4AYW13IVJXd6wAAAAASUVORK5CYII=);\n}\n.leaflet-control-farm-status a.active\n{\n	background-color: #BBB;\n}\n.leaflet-control-farm-status-tooltip\n{\n	background-color: rgba(255, 255, 255, 0.6);\n	display: none;\n	height: 44px;\n	left: 30px;\n	line-height: 15px;\n	margin-left: 15px;\n	margin-top: -12px;\n	padding: 4px 10px;\n	position: absolute;\n	top: 50%;\n	white-space: nowrap;\n	width: auto;\n}\n.leaflet-control-farm-status a.active .leaflet-control-farm-status-tooltip\n{\n	display: block;\n}\n.leaflet-control-farm-status a.finish .leaflet-control-farm-status-tooltip\n{\n	display: block;\n}\n.leaflet-control-farm-status-tooltip:before\n{\n	border-color: transparent rgba(255, 255, 255, 0.6);\n	border-style: solid;\n	border-width: 12px 12px 12px 0;\n	content: "";\n	display: block;\n	height: 0;\n	left: -12px;\n	position: absolute;\n	width: 0;\n}\n').appendTo('head');
 
   window.plugin.farmStatus.defineClicker(L);
   window.plugin.farmStatus.clicker = new L.Clicker(map, {});
