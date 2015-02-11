@@ -1,5 +1,5 @@
 SCRIPTS = $(wildcard *.user.js *.meta.js)
-SRCS = $(wildcard src/*.js src/*.css)
+SRCS = $(wildcard src/*.js src/*.css images/*.png)
 
 all: $(SCRIPTS)
 
