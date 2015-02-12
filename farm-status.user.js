@@ -2,11 +2,11 @@
 // @id             iitc-plugin-farm-status@randomizax
 // @name           IITC plugin: Report farm status
 // @category       Info
-// @version        0.1.3.20150211.130350
+// @version        0.1.4.20150212.151709
 // @namespace      https://github.com/jonatkins/ingress-intel-total-conversion
 // @updateURL      https://rawgit.com/randomizax/farm-status/latest/farm-status.meta.js
 // @downloadURL    https://rawgit.com/randomizax/farm-status/latest/farm-status.user.js
-// @description    [randomizax-2015-02-11-130350] Display exportable list of portals as TSV(CSV).
+// @description    [randomizax-2015-02-12-151709] Display exportable list of portals as TSV(CSV).
 // @include        https://www.ingress.com/intel*
 // @include        http://www.ingress.com/intel*
 // @match          https://www.ingress.com/intel*
@@ -22,7 +22,7 @@ if(typeof window.plugin !== 'function') window.plugin = function() {};
 //PLUGIN AUTHORS: writing a plugin outside of the IITC build environment? if so, delete these lines!!
 //(leaving them in place might break the 'About IITC' page or break update checks)
 // plugin_info.buildName = 'randomizax';
-// plugin_info.dateTimeVersion = '20150211.130350';
+// plugin_info.dateTimeVersion = '20150212.151709';
 // plugin_info.pluginId = 'farm-status';
 //END PLUGIN AUTHORS NOTE
 
@@ -60,39 +60,46 @@ window.plugin.farmStatus.Farm = L.Class.extend({
     this.options.portals = {};
     this.options.corePolygons = [];
     this.options.neiborPolygons = [];
-    console.log(this);
   },
   add: function(guid, tier) {
     var tier = tier || window.plugin.farmStatus.Farm.CORE;
     var portal = window.portals[guid];
     if (portal === null) return;
     this.options.portals[guid] = tier;
-    console.log(guid + " -> " + tier);
   },
   remove: function(guid) {
     delete this.options.portals[guid];
   },
   count: function() {
     var enl_lvls = [null, 0,0,0,0,0,0,0,0];
-    var reg_lvls = [null, 0,0,0,0,0,0,0,0];
+    var res_lvls = [null, 0,0,0,0,0,0,0,0];
     var neu_lvls = [null, 0,0,0,0,0,0,0,0];
     var farm = this;
-    console.log("farm.options.faction = " + farm.options.faction);
+    // console.log("farm.options.faction = " + farm.options.faction);
     $.each(window.portals, function(guid, portal) {
       if (farm.options.portals[guid] == window.plugin.farmStatus.Farm.CORE) {
-        console.log(portal);
+        // console.log(portal);
         var lvl = portal.options.level;
         var team = portal.options.team;
-        var counter = team == window.TEAM_ENL ? enl_lvls : team == window.TEAM_RES ? reg_lvls : neu_lvls;
+        var counter = team == window.TEAM_ENL ? enl_lvls : team == window.TEAM_RES ? res_lvls : neu_lvls;
         if (lvl < 6) lvl = 6;
         counter[lvl]++;
       }
     });
-    var enl = "ENL: P8 x " + enl_lvls[8] + ";  P7 x " + enl_lvls[7] + ";  P6- x " + enl_lvls[6];
-    var reg = "RES: P8 x " + reg_lvls[8] + ";  P7 x " + reg_lvls[7] + ";  P6- x " + reg_lvls[6];
-    var neu = "Neutral: " + neu_lvls[6];
+    var enl = [];
+    if (enl_lvls[8] > 0) enl.push("P8 x " + enl_lvls[8]);
+    if (enl_lvls[7] > 0) enl.push("P7 x " + enl_lvls[7]);
+    if (enl_lvls[6] > 0) enl.push("P6- x " + enl_lvls[6]);
+    var res = [];
+    if (res_lvls[8] > 0) res.push("P8 x " + res_lvls[8]);
+    if (res_lvls[7] > 0) res.push("P7 x " + res_lvls[7]);
+    if (res_lvls[6] > 0) res.push("P6- x " + res_lvls[6]);
+    var str = [];
+    if (enl.length > 0) str.push("ENL: " + enl.join(";  "));
+    if (res.length > 0) str.push("RES: " + res.join(";  "));
+    if (neu_lvls[6] > 0) str.push("Neutral: " + neu_lvls[6]);
 
-    return enl + "<br/>" + reg + "<br/>" + neu;
+    return str.length == 0 ? "Add portal or polygon" : str.join("<br/>");
   },
 
 });
@@ -122,14 +129,17 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 window.plugin.farmStatus.pointInPolygon = function ( polygon, pt ) {
   var poly = polygon.getLatLngs();
 
+  var onpoly = false;
   for(var c = false, i = -1, l = poly.length, j = l - 1; ++i < l; j = i) {
+    if (poly[i].lat == pt.lat && poly[i].lng == pt.lng)
+      onpoly = true;
     if (((poly[i].lat <= pt.lat && pt.lat < poly[j].lat) ||
          (poly[j].lat <= pt.lat && pt.lat < poly[i].lat)) &&
         (pt.lng < (poly[j].lng - poly[i].lng) * (pt.lat - poly[i].lat) / (poly[j].lat - poly[i].lat) + poly[i].lng)) {
       c = !c;
     }
   }
-  return c;
+  return c | onpoly;
 };
 
 // Return guid of the clicked portal
