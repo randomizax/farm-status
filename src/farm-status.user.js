@@ -2,11 +2,11 @@
 // @id             iitc-plugin-farm-status@randomizax
 // @name           IITC plugin: Report farm status
 // @category       Info
-// @version        0.1.4.@@DATETIMEVERSION@@
+// @version        0.1.5.@@DATETIMEVERSION@@
 // @namespace      https://github.com/jonatkins/ingress-intel-total-conversion
 // @updateURL      @@UPDATEURL@@
 // @downloadURL    @@DOWNLOADURL@@
-// @description    [@@BUILDNAME@@-@@BUILDDATE@@] Display exportable list of portals as TSV(CSV).
+// @description    [@@BUILDNAME@@-@@BUILDDATE@@] Count portals in polygon/polyline per portal level.
 // @include        https://www.ingress.com/intel*
 // @include        http://www.ingress.com/intel*
 // @match          https://www.ingress.com/intel*
@@ -296,13 +296,13 @@ window.plugin.farmStatus.pick = function(point) {
   } else {
     var candidates = [];
     window.plugin.drawTools.drawnItems.eachLayer( function( layer ) {
-      if ( window.plugin.farmStatus.pointInPolygon( layer, point ) ) {
-        if (layer instanceof L.GeodesicCircle ||
-            layer instanceof L.Circle ||
-            layer instanceof L.GeodesicPolygon ||
-            layer instanceof L.Polygon ||
-            layer instanceof L.GeodesicPolyline ||
-            layer instanceof L.Polyline) {
+      if (layer instanceof L.GeodesicCircle ||
+          layer instanceof L.Circle ||
+          layer instanceof L.GeodesicPolygon ||
+          layer instanceof L.Polygon ||
+          layer instanceof L.GeodesicPolyline ||
+          layer instanceof L.Polyline) {
+        if ( window.plugin.farmStatus.pointInPolygon( layer, point ) ) {
           candidates.push([Math.abs(window.plugin.farmStatus.polygonInfo(layer).area), layer]);
         }
       }
