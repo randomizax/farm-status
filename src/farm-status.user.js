@@ -23,75 +23,6 @@ window.plugin.farmStatus = {};
 window.plugin.farmStatus.clicker = null;
 window.plugin.farmStatus.farm = null;
 
-window.plugin.farmStatus.Farm = L.Class.extend({
-  statics: {
-    CORE: 0,
-    NEIBOR: 1,
-  },
-  options: {
-    name: 'Farm',
-    faction: window.TEAM_ENL,
-    portals: {}, // guid => CORE/NEIBOR
-    bbox: null, // L.LatLngBounds
-    corePolygons: [],
-    neiborPolygons: [],
-  },
-  initialize: function(options) {
-    options = options || {};
-    for (var type in this.options) {
-      if (this.options.hasOwnProperty(type)) {
-	if (options[type]) {
-	  options[type] = L.extend({}, this.options[type], options[type]);
-	}
-      }
-    }
-    this.options.portals = {};
-    this.options.corePolygons = [];
-    this.options.neiborPolygons = [];
-  },
-  add: function(guid, tier) {
-    var tier = tier || window.plugin.farmStatus.Farm.CORE;
-    var portal = window.portals[guid];
-    if (portal === null) return;
-    this.options.portals[guid] = tier;
-  },
-  remove: function(guid) {
-    delete this.options.portals[guid];
-  },
-  count: function() {
-    var enl_lvls = [null, 0,0,0,0,0,0,0,0];
-    var res_lvls = [null, 0,0,0,0,0,0,0,0];
-    var neu_lvls = [null, 0,0,0,0,0,0,0,0];
-    var farm = this;
-    // console.log("farm.options.faction = " + farm.options.faction);
-    $.each(window.portals, function(guid, portal) {
-      if (farm.options.portals[guid] == window.plugin.farmStatus.Farm.CORE) {
-        // console.log(portal);
-        var lvl = portal.options.level;
-        var team = portal.options.team;
-        var counter = team == window.TEAM_ENL ? enl_lvls : team == window.TEAM_RES ? res_lvls : neu_lvls;
-        if (lvl < 6) lvl = 6;
-        counter[lvl]++;
-      }
-    });
-    var enl = [];
-    if (enl_lvls[8] > 0) enl.push("P8 x " + enl_lvls[8]);
-    if (enl_lvls[7] > 0) enl.push("P7 x " + enl_lvls[7]);
-    if (enl_lvls[6] > 0) enl.push("P6- x " + enl_lvls[6]);
-    var res = [];
-    if (res_lvls[8] > 0) res.push("P8 x " + res_lvls[8]);
-    if (res_lvls[7] > 0) res.push("P7 x " + res_lvls[7]);
-    if (res_lvls[6] > 0) res.push("P6- x " + res_lvls[6]);
-    var str = [];
-    if (enl.length > 0) str.push("ENL: " + enl.join(";  "));
-    if (res.length > 0) str.push("RES: " + res.join(";  "));
-    if (neu_lvls[6] > 0) str.push("Neutral: " + neu_lvls[6]);
-
-    return str.length == 0 ? "Add portal or polygon" : str.join("<br/>");
-  },
-
-});
-
 
 // Detect if a point is inside polygon.
 /*
@@ -152,6 +83,75 @@ window.plugin.farmStatus.portalOnPoint = function(unsnappedLatLng) {
 // Be sure to run after draw-tool is loaded.
 window.plugin.farmStatus.defineClicker = function(L) {
   if (L.Clicker) return;
+
+  window.plugin.farmStatus.Farm = L.Class.extend({
+    statics: {
+      CORE: 0,
+      NEIBOR: 1,
+    },
+    options: {
+      name: 'Farm',
+      faction: window.TEAM_ENL,
+      portals: {}, // guid => CORE/NEIBOR
+      bbox: null, // L.LatLngBounds
+      corePolygons: [],
+      neiborPolygons: [],
+    },
+    initialize: function(options) {
+      options = options || {};
+      for (var type in this.options) {
+        if (this.options.hasOwnProperty(type)) {
+	  if (options[type]) {
+	    options[type] = L.extend({}, this.options[type], options[type]);
+	  }
+        }
+      }
+      this.options.portals = {};
+      this.options.corePolygons = [];
+      this.options.neiborPolygons = [];
+    },
+    add: function(guid, tier) {
+      var tier = tier || window.plugin.farmStatus.Farm.CORE;
+      var portal = window.portals[guid];
+      if (portal === null) return;
+      this.options.portals[guid] = tier;
+    },
+    remove: function(guid) {
+      delete this.options.portals[guid];
+    },
+    count: function() {
+      var enl_lvls = [null, 0,0,0,0,0,0,0,0];
+      var res_lvls = [null, 0,0,0,0,0,0,0,0];
+      var neu_lvls = [null, 0,0,0,0,0,0,0,0];
+      var farm = this;
+      // console.log("farm.options.faction = " + farm.options.faction);
+      $.each(window.portals, function(guid, portal) {
+        if (farm.options.portals[guid] == window.plugin.farmStatus.Farm.CORE) {
+          // console.log(portal);
+          var lvl = portal.options.level;
+          var team = portal.options.team;
+          var counter = team == window.TEAM_ENL ? enl_lvls : team == window.TEAM_RES ? res_lvls : neu_lvls;
+          if (lvl < 6) lvl = 6;
+          counter[lvl]++;
+        }
+      });
+      var enl = [];
+      if (enl_lvls[8] > 0) enl.push("P8 x " + enl_lvls[8]);
+      if (enl_lvls[7] > 0) enl.push("P7 x " + enl_lvls[7]);
+      if (enl_lvls[6] > 0) enl.push("P6- x " + enl_lvls[6]);
+      var res = [];
+      if (res_lvls[8] > 0) res.push("P8 x " + res_lvls[8]);
+      if (res_lvls[7] > 0) res.push("P7 x " + res_lvls[7]);
+      if (res_lvls[6] > 0) res.push("P6- x " + res_lvls[6]);
+      var str = [];
+      if (enl.length > 0) str.push("ENL: " + enl.join(";  "));
+      if (res.length > 0) str.push("RES: " + res.join(";  "));
+      if (neu_lvls[6] > 0) str.push("Neutral: " + neu_lvls[6]);
+
+      return str.length == 0 ? "Add portal or polygon" : str.join("<br/>");
+    },
+
+  });
 
   L.Clicker = L.Draw.Feature.extend({
     statics: {
