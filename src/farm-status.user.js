@@ -2,7 +2,7 @@
 // @id             iitc-plugin-farm-status@randomizax
 // @name           IITC plugin: Report farm status
 // @category       Info
-// @version        1.0.0.@@DATETIMEVERSION@@
+// @version        1.0.1.@@DATETIMEVERSION@@
 // @namespace      https://github.com/jonatkins/ingress-intel-total-conversion
 // @updateURL      @@UPDATEURL@@
 // @downloadURL    @@DOWNLOADURL@@
@@ -127,6 +127,7 @@ window.plugin.farmStatus.defineClicker = function(L) {
       var enl_lvls = [null, 0,0,0,0,0,0,0,0];
       var res_lvls = [null, 0,0,0,0,0,0,0,0];
       var neu_lvls = [null, 0,0,0,0,0,0,0,0];
+      var total = 0;
       var farm = this;
       // console.log("farm.options.faction = " + farm.options.faction);
       $.each(window.portals, function(guid, portal) {
@@ -137,6 +138,7 @@ window.plugin.farmStatus.defineClicker = function(L) {
           var counter = team == window.TEAM_ENL ? enl_lvls : team == window.TEAM_RES ? res_lvls : neu_lvls;
           if (lvl < 6) lvl = 6;
           counter[lvl]++;
+          total++;
         }
       });
       var enl = [];
@@ -151,6 +153,7 @@ window.plugin.farmStatus.defineClicker = function(L) {
       if (enl.length > 0) str.push("ENL: " + enl.join(";  "));
       if (res.length > 0) str.push("RES: " + res.join(";  "));
       if (neu_lvls[6] > 0) str.push("Neutral: " + neu_lvls[6]);
+      str.push("Total: " + total);
 
       return str.length == 0 ? "Add portal or polygon" : str.join("<br/>");
     },

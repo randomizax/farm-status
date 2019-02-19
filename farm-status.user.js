@@ -2,11 +2,11 @@
 // @id             iitc-plugin-farm-status@randomizax
 // @name           IITC plugin: Report farm status
 // @category       Info
-// @version        1.0.0.20181124.13955
+// @version        1.0.1.20190219.164024
 // @namespace      https://github.com/jonatkins/ingress-intel-total-conversion
 // @updateURL      https://rawgit.com/randomizax/farm-status/latest/farm-status.meta.js
 // @downloadURL    https://rawgit.com/randomizax/farm-status/latest/farm-status.user.js
-// @description    [randomizax-2018-11-24-013955] Count portals in polygon/polyline per portal level.
+// @description    [randomizax-2019-02-19-164024] Count portals in polygon/polyline per portal level.
 // @include        https://www.ingress.com/intel*
 // @include        http://www.ingress.com/intel*
 // @include        https://intel.ingress.com/intel*
@@ -26,7 +26,7 @@ if(typeof window.plugin !== 'function') window.plugin = function() {};
 //PLUGIN AUTHORS: writing a plugin outside of the IITC build environment? if so, delete these lines!!
 //(leaving them in place might break the 'About IITC' page or break update checks)
 // plugin_info.buildName = 'randomizax';
-// plugin_info.dateTimeVersion = '20181124.13955';
+// plugin_info.dateTimeVersion = '20190219.164024';
 // plugin_info.pluginId = 'farm-status';
 //END PLUGIN AUTHORS NOTE
 
@@ -139,6 +139,7 @@ window.plugin.farmStatus.defineClicker = function(L) {
       var enl_lvls = [null, 0,0,0,0,0,0,0,0];
       var res_lvls = [null, 0,0,0,0,0,0,0,0];
       var neu_lvls = [null, 0,0,0,0,0,0,0,0];
+      var total = 0;
       var farm = this;
       // console.log("farm.options.faction = " + farm.options.faction);
       $.each(window.portals, function(guid, portal) {
@@ -149,6 +150,7 @@ window.plugin.farmStatus.defineClicker = function(L) {
           var counter = team == window.TEAM_ENL ? enl_lvls : team == window.TEAM_RES ? res_lvls : neu_lvls;
           if (lvl < 6) lvl = 6;
           counter[lvl]++;
+          total++;
         }
       });
       var enl = [];
@@ -163,6 +165,7 @@ window.plugin.farmStatus.defineClicker = function(L) {
       if (enl.length > 0) str.push("ENL: " + enl.join(";  "));
       if (res.length > 0) str.push("RES: " + res.join(";  "));
       if (neu_lvls[6] > 0) str.push("Neutral: " + neu_lvls[6]);
+      str.push("Total: " + total);
 
       return str.length == 0 ? "Add portal or polygon" : str.join("<br/>");
     },
