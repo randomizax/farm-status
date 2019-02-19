@@ -2,11 +2,11 @@
 // @id             iitc-plugin-farm-status@randomizax
 // @name           IITC plugin: Report farm status
 // @category       Info
-// @version        1.0.1.20190219.164024
+// @version        1.0.2.20190219.164639
 // @namespace      https://github.com/jonatkins/ingress-intel-total-conversion
 // @updateURL      https://rawgit.com/randomizax/farm-status/latest/farm-status.meta.js
 // @downloadURL    https://rawgit.com/randomizax/farm-status/latest/farm-status.user.js
-// @description    [randomizax-2019-02-19-164024] Count portals in polygon/polyline per portal level.
+// @description    [randomizax-2019-02-19-164639] Count portals in polygon/polyline per portal level.
 // @include        https://www.ingress.com/intel*
 // @include        http://www.ingress.com/intel*
 // @include        https://intel.ingress.com/intel*
@@ -26,7 +26,7 @@ if(typeof window.plugin !== 'function') window.plugin = function() {};
 //PLUGIN AUTHORS: writing a plugin outside of the IITC build environment? if so, delete these lines!!
 //(leaving them in place might break the 'About IITC' page or break update checks)
 // plugin_info.buildName = 'randomizax';
-// plugin_info.dateTimeVersion = '20190219.164024';
+// plugin_info.dateTimeVersion = '20190219.164639';
 // plugin_info.pluginId = 'farm-status';
 //END PLUGIN AUTHORS NOTE
 
@@ -374,7 +374,7 @@ window.plugin.farmStatus.onTipClick = function(ev) {
 };
 
 var setup = function() {
-  $('<style>').prop('type', 'text/css').html('.leaflet-control-farm-status a\n{\n	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAABhElEQVRYw+2XzW3CUAzHf0HcywiMEEboxeeyQTtBR2gzQcsEZQM4+0I7QbMBYYNskF78pNeQl7ykPHEoliIZy/Hn33aAG/13ylIZFpFfv1W1U2+WyHkDNDG6s9SZD9F8wNgCeACWJqqAvarWyTEgIjmw85zjBbFW1bIn82bIvsPErCdz57wGCntqk+1Mp93zdu9D8nAFLJNH4MNEK8BlmwPfxj8B21bGvaSqWSwG/LKXAX7Zk8hZC0JjOI8IPHf9Nlw4uusyfKkp8FF+EJGN8c+e/HSJKQgFsAXejF8ALwGdoZ5PXkQO+SEqWlU6A3cX4KL3gPVxYYjv2gMroFZVROTVWrMHClWt/ryIPCDlwMGCcZW596bBH1e/NdGBZBE73W1EgPWA89GBZBMPy5DzNh6mHaOuF0VkjPPLnmOryBjnZYrvge0I3TpFAEWMYaOvFAFUwOYqFfBA+R5ZhSQYcJltInSqyYsocj8cbVV/mrOT8aVfob49MPl/Qczdj7mGN7o6/QBHl4lmP2K56wAAAABJRU5ErkJggg==);\n}\n.leaflet-control-farm-status a.active\n{\n	background-color: #BBB;\n}\n.leaflet-control-farm-status-tooltip\n{\n	background-color: rgba(255, 255, 255, 0.6);\n	display: none;\n	height: 44px;\n	left: 30px;\n	line-height: 15px;\n	margin-left: 15px;\n	margin-top: -12px;\n	padding: 4px 10px;\n	position: absolute;\n	top: 50%;\n	white-space: nowrap;\n	width: auto;\n}\n.leaflet-control-farm-status a.active .leaflet-control-farm-status-tooltip\n{\n	display: block;\n}\n.leaflet-control-farm-status a.finish .leaflet-control-farm-status-tooltip\n{\n	display: block;\n}\n.leaflet-control-farm-status-tooltip:before\n{\n	border-color: transparent rgba(255, 255, 255, 0.6);\n	border-style: solid;\n	border-width: 12px 12px 12px 0;\n	content: "";\n	display: block;\n	height: 0;\n	left: -12px;\n	position: absolute;\n	width: 0;\n}\n').appendTo('head');
+  $('<style>').prop('type', 'text/css').html('.leaflet-control-farm-status a\n{\n	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAABhElEQVRYw+2XzW3CUAzHf0HcywiMEEboxeeyQTtBR2gzQcsEZQM4+0I7QbMBYYNskF78pNeQl7ykPHEoliIZy/Hn33aAG/13ylIZFpFfv1W1U2+WyHkDNDG6s9SZD9F8wNgCeACWJqqAvarWyTEgIjmw85zjBbFW1bIn82bIvsPErCdz57wGCntqk+1Mp93zdu9D8nAFLJNH4MNEK8BlmwPfxj8B21bGvaSqWSwG/LKXAX7Zk8hZC0JjOI8IPHf9Nlw4uusyfKkp8FF+EJGN8c+e/HSJKQgFsAXejF8ALwGdoZ5PXkQO+SEqWlU6A3cX4KL3gPVxYYjv2gMroFZVROTVWrMHClWt/ryIPCDlwMGCcZW596bBH1e/NdGBZBE73W1EgPWA89GBZBMPy5DzNh6mHaOuF0VkjPPLnmOryBjnZYrvge0I3TpFAEWMYaOvFAFUwOYqFfBA+R5ZhSQYcJltInSqyYsocj8cbVV/mrOT8aVfob49MPl/Qczdj7mGN7o6/QBHl4lmP2K56wAAAABJRU5ErkJggg==);\n}\n.leaflet-control-farm-status a.active\n{\n	background-color: #BBB;\n}\n.leaflet-control-farm-status-tooltip\n{\n	background-color: rgba(255, 255, 255, 0.6);\n	display: none;\n	height: 72px;\n	left: 30px;\n	line-height: 15px;\n	margin-left: 15px;\n	margin-top: -12px;\n	padding: 4px 10px;\n	position: absolute;\n	top: 50%;\n	white-space: nowrap;\n	width: auto;\n}\n.leaflet-control-farm-status a.active .leaflet-control-farm-status-tooltip\n{\n	display: block;\n}\n.leaflet-control-farm-status a.finish .leaflet-control-farm-status-tooltip\n{\n	display: block;\n}\n.leaflet-control-farm-status-tooltip:before\n{\n	border-color: transparent rgba(255, 255, 255, 0.6);\n	border-style: solid;\n	border-width: 12px 12px 12px 0;\n	content: "";\n	display: block;\n	height: 0;\n	left: -12px;\n	position: absolute;\n	width: 0;\n}\n').appendTo('head');
 
   window.plugin.farmStatus.defineClicker(L);
   window.plugin.farmStatus.clicker = new L.Clicker(map, {});
