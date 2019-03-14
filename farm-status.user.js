@@ -2,19 +2,15 @@
 // @id             iitc-plugin-farm-status@randomizax
 // @name           IITC plugin: Report farm status
 // @category       Info
-// @version        1.0.2.20190219.164639
+// @version        1.0.3.20190314.160025
 // @namespace      https://github.com/jonatkins/ingress-intel-total-conversion
-// @updateURL      https://rawgit.com/randomizax/farm-status/latest/farm-status.meta.js
-// @downloadURL    https://rawgit.com/randomizax/farm-status/latest/farm-status.user.js
-// @description    [randomizax-2019-02-19-164639] Count portals in polygon/polyline per portal level.
-// @include        https://www.ingress.com/intel*
-// @include        http://www.ingress.com/intel*
-// @include        https://intel.ingress.com/intel*
-// @include        http://intel.ingress.com/intel*
-// @match          https://www.ingress.com/intel*
-// @match          http://www.ingress.com/intel*
-// @match          https://intel.ingress.com/intel*
-// @match          http://intel.ingress.com/intel*
+// @updateURL      https://randomizax.github.io/farm-status/farm-status.meta.js
+// @downloadURL    https://randomizax.github.io/farm-status/farm-status.user.js
+// @description    [randomizax-2019-03-14-160025] Count portals in polygon/polyline per portal level.
+// @include        https://*.ingress.com/intel*
+// @include        http://*.ingress.com/intel*
+// @match          https://*.ingress.com/intel*
+// @match          http://*.ingress.com/intel*
 // @grant          none
 // ==/UserScript==
 
@@ -26,7 +22,7 @@ if(typeof window.plugin !== 'function') window.plugin = function() {};
 //PLUGIN AUTHORS: writing a plugin outside of the IITC build environment? if so, delete these lines!!
 //(leaving them in place might break the 'About IITC' page or break update checks)
 // plugin_info.buildName = 'randomizax';
-// plugin_info.dateTimeVersion = '20190219.164639';
+// plugin_info.dateTimeVersion = '20190314.160025';
 // plugin_info.pluginId = 'farm-status';
 //END PLUGIN AUTHORS NOTE
 
