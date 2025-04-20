@@ -2,15 +2,13 @@
 // @id             iitc-plugin-farm-status@randomizax
 // @name           IITC plugin: Report farm status
 // @category       Info
-// @version        1.0.3.@@DATETIMEVERSION@@
-// @namespace      https://github.com/jonatkins/ingress-intel-total-conversion
+// @version        2.0.0.@@DATETIMEVERSION@@
+// @namespace      https://github.com/IITC-CE/ingress-intel-total-conversion
 // @updateURL      @@UPDATEURL@@
 // @downloadURL    @@DOWNLOADURL@@
 // @description    [@@BUILDNAME@@-@@BUILDDATE@@] Count portals in polygon/polyline per portal level.
-// @include        https://*.ingress.com/intel*
-// @include        http://*.ingress.com/intel*
-// @match          https://*.ingress.com/intel*
-// @match          http://*.ingress.com/intel*
+// @include        https://intel.ingress.com/*
+// @match          https://intel.ingress.com/*
 // @grant          none
 // ==/UserScript==
 
